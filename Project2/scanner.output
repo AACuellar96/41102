@@ -1,0 +1,3529 @@
+State 68 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 115 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: Program Decl
+    2        | Decl
+
+    3 Decl: VariableDecl
+    4     | FunctionDecl
+    5     | ClassDecl
+    6     | InterfaceDecl
+
+    7 VariableDecl: Variable ";"
+
+    8 Variable: Type ID
+
+    9 Type: INT
+   10     | DOUBLE
+   11     | BOOLEAN
+   12     | STRING
+   13     | Type "[" "]"
+   14     | ID
+
+   15 FunctionDecl: Type ID "(" Formals ")" StmtBlock
+   16             | VOID ID "(" Formals ")" StmtBlock
+
+   17 Formals: Variable
+   18        | Formal "," Variable
+   19        | %empty
+
+   20 Formal: Formal "," Variable
+   21       | Variable
+
+   22 ClassDecl: CLASS ID Ext Iid "{" Field "}"
+   23          | CLASS ID Ext Iid "}" "}"
+
+   24 Ext: IMPLEMENTS ID
+   25    | %empty
+
+   26 Iid: %empty
+   27    | EXTENDS ID
+   28    | EXTENDS ID "," Aid
+
+   29 Aid: Aid "," ID
+   30    | ID
+
+   31 Field: Field VariableDecl
+   32      | Field FunctionDecl
+   33      | VariableDecl
+   34      | FunctionDecl
+
+   35 InterfaceDecl: INTERFACE ID "{" Prototype "}"
+   36              | INTERFACE ID "{" "}"
+
+   37 Prototype: Prototype Type ID "(" Formals ")" ";"
+   38          | Prototype VOID ID "(" Formals ")" ";"
+   39          | Type ID "(" Formals ")" ";"
+   40          | VOID ID "(" Formals ")" ";"
+
+   41 StmtBlock: "{" Vd Sd "}"
+   42          | "{" Sd "}"
+   43          | "{" Vd "}"
+   44          | "{" "}"
+
+   45 Vd: Vd VariableDecl
+   46   | VariableDecl
+
+   47 Sd: Sd Stmt
+   48   | Stmt
+
+   49 Stmt: Expr ";"
+   50     | ";"
+   51     | IfStmt
+   52     | WhileStmt
+   53     | ForStmt
+   54     | BreakStmt
+   55     | ReturnStmt
+   56     | PrintStmt
+   57     | StmtBlock
+
+   58 IfStmt: IF "(" Expr ")" Stmt
+   59       | IF "(" Expr ")" Stmt ELSE Stmt
+
+   60 WhileStmt: WHILE "(" Expr ")" Stmt
+
+   61 ForStmt: FOR "(" Expr ";" Expr ";" Expr ")" Stmt
+   62        | FOR "(" ";" Expr ";" Expr ")" Stmt
+   63        | FOR "(" ";" Expr ";" ")" Stmt
+   64        | FOR "(" Expr ";" Expr ";" ")" Stmt
+
+   65 BreakStmt: BREAK
+
+   66 ReturnStmt: RETURN ";"
+   67           | RETURN Expr ";"
+
+   68 PrintStmt: PRINTLN "(" EX ")" ";"
+
+   69 Expr: Lvalue "=" Expr
+   70     | Constant
+   71     | Lvalue
+   72     | Call
+   73     | "(" Expr ")"
+   74     | Expr "+" Expr
+   75     | Expr "-" Expr
+   76     | Expr "*" Expr
+   77     | Expr "/" Expr
+   78     | Expr "%" Expr
+   79     | "-" Expr
+   80     | Expr "<" Expr
+   81     | Expr "<=" Expr
+   82     | Expr ">" Expr
+   83     | Expr ">=" Expr
+   84     | Expr "==" Expr
+   85     | Expr "!=" Expr
+   86     | Expr "&&" Expr
+   87     | Expr "||" Expr
+   88     | "!" Expr
+   89     | READLN "(" ")"
+   90     | NEWARRAY "(" INTCONSTANT "," Type ")"
+
+   91 Lvalue: ID
+   92       | Lvalue "[" Expr "]"
+   93       | Lvalue "." ID
+
+   94 Call: ID "(" Actuals ")"
+   95     | ID "." ID "(" Actuals ")"
+
+   96 Actuals: EX
+   97        | %empty
+
+   98 EX: EX "," Expr
+   99   | Expr
+
+  100 Constant: INTCONSTANT
+  101         | DOUBLECONSTANT
+  102         | STRINGCONSTANT
+  103         | BOOLEANCONSTANT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ID (258) 8 14 15 16 22 23 24 27 28 29 30 35 36 37 38 39 40 91 93 94
+    95
+INT (259) 9
+DOUBLE (260) 10
+BOOLEAN (261) 11
+STRING (262) 12
+VOID (263) 16 38 40
+CLASS (264) 22 23
+IMPLEMENTS (265) 24
+EXTENDS (266) 27 28
+INTERFACE (267) 35 36
+IF (268) 58 59
+ELSE (269) 59
+WHILE (270) 60
+FOR (271) 61 62 63 64
+BREAK (272) 65
+RETURN (273) 66 67
+PRINTLN (274) 68
+READLN (275) 89
+NEWARRAY (276) 90
+INTCONSTANT (277) 90 100
+DOUBLECONSTANT (278) 101
+STRINGCONSTANT (279) 102
+BOOLEANCONSTANT (280) 103
+"=" (281) 69
+"||" (282) 87
+"&&" (283) 86
+"==" (284) 84
+"!=" (285) 85
+"<" (286) 80
+">" (287) 82
+"<=" (288) 81
+">=" (289) 83
+"+" (290) 74
+"-" (291) 75 79
+"*" (292) 76
+"/" (293) 77
+"%" (294) 78
+"!" (295) 88
+UMINUS (296)
+"[" (297) 13 92
+"]" (298) 13 92
+"." (299) 93 95
+"{" (300) 22 35 36 41 42 43 44
+"}" (301) 22 23 35 36 41 42 43 44
+"(" (302) 15 16 37 38 39 40 58 59 60 61 62 63 64 68 73 89 90 94 95
+")" (303) 15 16 37 38 39 40 58 59 60 61 62 63 64 68 73 89 90 94 95
+";" (304) 7 37 38 39 40 49 50 61 62 63 64 66 67 68
+"," (305) 18 20 28 29 90 98
+THEN (306)
+STATIC (307)
+
+
+Nonterminals, with rules where they appear
+
+$accept (53)
+    on left: 0
+Program (54)
+    on left: 1 2, on right: 0 1
+Decl (55)
+    on left: 3 4 5 6, on right: 1 2
+VariableDecl (56)
+    on left: 7, on right: 3 31 33 45 46
+Variable (57)
+    on left: 8, on right: 7 17 18 20 21
+Type (58)
+    on left: 9 10 11 12 13 14, on right: 8 13 15 37 39 90
+FunctionDecl (59)
+    on left: 15 16, on right: 4 32 34
+Formals (60)
+    on left: 17 18 19, on right: 15 16 37 38 39 40
+Formal (61)
+    on left: 20 21, on right: 18 20
+ClassDecl (62)
+    on left: 22 23, on right: 5
+Ext (63)
+    on left: 24 25, on right: 22 23
+Iid (64)
+    on left: 26 27 28, on right: 22 23
+Aid (65)
+    on left: 29 30, on right: 28 29
+Field (66)
+    on left: 31 32 33 34, on right: 22 31 32
+InterfaceDecl (67)
+    on left: 35 36, on right: 6
+Prototype (68)
+    on left: 37 38 39 40, on right: 35 37 38
+StmtBlock (69)
+    on left: 41 42 43 44, on right: 15 16 57
+Vd (70)
+    on left: 45 46, on right: 41 43 45
+Sd (71)
+    on left: 47 48, on right: 41 42 47
+Stmt (72)
+    on left: 49 50 51 52 53 54 55 56 57, on right: 47 48 58 59 60 61
+    62 63 64
+IfStmt (73)
+    on left: 58 59, on right: 51
+WhileStmt (74)
+    on left: 60, on right: 52
+ForStmt (75)
+    on left: 61 62 63 64, on right: 53
+BreakStmt (76)
+    on left: 65, on right: 54
+ReturnStmt (77)
+    on left: 66 67, on right: 55
+PrintStmt (78)
+    on left: 68, on right: 56
+Expr (79)
+    on left: 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86
+    87 88 89 90, on right: 49 58 59 60 61 62 63 64 67 69 73 74 75 76
+    77 78 79 80 81 82 83 84 85 86 87 88 92 98 99
+Lvalue (80)
+    on left: 91 92 93, on right: 69 71 92 93
+Call (81)
+    on left: 94 95, on right: 72
+Actuals (82)
+    on left: 96 97, on right: 94 95
+EX (83)
+    on left: 98 99, on right: 68 96 98
+Constant (84)
+    on left: 100 101 102 103, on right: 70
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    ID         shift, and go to state 1
+    INT        shift, and go to state 2
+    DOUBLE     shift, and go to state 3
+    BOOLEAN    shift, and go to state 4
+    STRING     shift, and go to state 5
+    VOID       shift, and go to state 6
+    CLASS      shift, and go to state 7
+    INTERFACE  shift, and go to state 8
+
+    Program        go to state 9
+    Decl           go to state 10
+    VariableDecl   go to state 11
+    Variable       go to state 12
+    Type           go to state 13
+    FunctionDecl   go to state 14
+    ClassDecl      go to state 15
+    InterfaceDecl  go to state 16
+
+
+State 1
+
+   14 Type: ID .
+
+    $default  reduce using rule 14 (Type)
+
+
+State 2
+
+    9 Type: INT .
+
+    $default  reduce using rule 9 (Type)
+
+
+State 3
+
+   10 Type: DOUBLE .
+
+    $default  reduce using rule 10 (Type)
+
+
+State 4
+
+   11 Type: BOOLEAN .
+
+    $default  reduce using rule 11 (Type)
+
+
+State 5
+
+   12 Type: STRING .
+
+    $default  reduce using rule 12 (Type)
+
+
+State 6
+
+   16 FunctionDecl: VOID . ID "(" Formals ")" StmtBlock
+
+    ID  shift, and go to state 17
+
+
+State 7
+
+   22 ClassDecl: CLASS . ID Ext Iid "{" Field "}"
+   23          | CLASS . ID Ext Iid "}" "}"
+
+    ID  shift, and go to state 18
+
+
+State 8
+
+   35 InterfaceDecl: INTERFACE . ID "{" Prototype "}"
+   36              | INTERFACE . ID "{" "}"
+
+    ID  shift, and go to state 19
+
+
+State 9
+
+    0 $accept: Program . $end
+    1 Program: Program . Decl
+
+    $end       shift, and go to state 20
+    ID         shift, and go to state 1
+    INT        shift, and go to state 2
+    DOUBLE     shift, and go to state 3
+    BOOLEAN    shift, and go to state 4
+    STRING     shift, and go to state 5
+    VOID       shift, and go to state 6
+    CLASS      shift, and go to state 7
+    INTERFACE  shift, and go to state 8
+
+    Decl           go to state 21
+    VariableDecl   go to state 11
+    Variable       go to state 12
+    Type           go to state 13
+    FunctionDecl   go to state 14
+    ClassDecl      go to state 15
+    InterfaceDecl  go to state 16
+
+
+State 10
+
+    2 Program: Decl .
+
+    $default  reduce using rule 2 (Program)
+
+
+State 11
+
+    3 Decl: VariableDecl .
+
+    $default  reduce using rule 3 (Decl)
+
+
+State 12
+
+    7 VariableDecl: Variable . ";"
+
+    ";"  shift, and go to state 22
+
+
+State 13
+
+    8 Variable: Type . ID
+   13 Type: Type . "[" "]"
+   15 FunctionDecl: Type . ID "(" Formals ")" StmtBlock
+
+    ID   shift, and go to state 23
+    "["  shift, and go to state 24
+
+
+State 14
+
+    4 Decl: FunctionDecl .
+
+    $default  reduce using rule 4 (Decl)
+
+
+State 15
+
+    5 Decl: ClassDecl .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 16
+
+    6 Decl: InterfaceDecl .
+
+    $default  reduce using rule 6 (Decl)
+
+
+State 17
+
+   16 FunctionDecl: VOID ID . "(" Formals ")" StmtBlock
+
+    "("  shift, and go to state 25
+
+
+State 18
+
+   22 ClassDecl: CLASS ID . Ext Iid "{" Field "}"
+   23          | CLASS ID . Ext Iid "}" "}"
+
+    IMPLEMENTS  shift, and go to state 26
+
+    $default  reduce using rule 25 (Ext)
+
+    Ext  go to state 27
+
+
+State 19
+
+   35 InterfaceDecl: INTERFACE ID . "{" Prototype "}"
+   36              | INTERFACE ID . "{" "}"
+
+    "{"  shift, and go to state 28
+
+
+State 20
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 21
+
+    1 Program: Program Decl .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 22
+
+    7 VariableDecl: Variable ";" .
+
+    $default  reduce using rule 7 (VariableDecl)
+
+
+State 23
+
+    8 Variable: Type ID .
+   15 FunctionDecl: Type ID . "(" Formals ")" StmtBlock
+
+    "("  shift, and go to state 29
+
+    $default  reduce using rule 8 (Variable)
+
+
+State 24
+
+   13 Type: Type "[" . "]"
+
+    "]"  shift, and go to state 30
+
+
+State 25
+
+   16 FunctionDecl: VOID ID "(" . Formals ")" StmtBlock
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 33
+    Formal    go to state 34
+
+
+State 26
+
+   24 Ext: IMPLEMENTS . ID
+
+    ID  shift, and go to state 35
+
+
+State 27
+
+   22 ClassDecl: CLASS ID Ext . Iid "{" Field "}"
+   23          | CLASS ID Ext . Iid "}" "}"
+
+    EXTENDS  shift, and go to state 36
+
+    $default  reduce using rule 26 (Iid)
+
+    Iid  go to state 37
+
+
+State 28
+
+   35 InterfaceDecl: INTERFACE ID "{" . Prototype "}"
+   36              | INTERFACE ID "{" . "}"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+    VOID     shift, and go to state 38
+    "}"      shift, and go to state 39
+
+    Type       go to state 40
+    Prototype  go to state 41
+
+
+State 29
+
+   15 FunctionDecl: Type ID "(" . Formals ")" StmtBlock
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 42
+    Formal    go to state 34
+
+
+State 30
+
+   13 Type: Type "[" "]" .
+
+    $default  reduce using rule 13 (Type)
+
+
+State 31
+
+   17 Formals: Variable .
+   21 Formal: Variable .
+
+    ","       reduce using rule 21 (Formal)
+    $default  reduce using rule 17 (Formals)
+
+
+State 32
+
+    8 Variable: Type . ID
+   13 Type: Type . "[" "]"
+
+    ID   shift, and go to state 43
+    "["  shift, and go to state 24
+
+
+State 33
+
+   16 FunctionDecl: VOID ID "(" Formals . ")" StmtBlock
+
+    ")"  shift, and go to state 44
+
+
+State 34
+
+   18 Formals: Formal . "," Variable
+   20 Formal: Formal . "," Variable
+
+    ","  shift, and go to state 45
+
+
+State 35
+
+   24 Ext: IMPLEMENTS ID .
+
+    $default  reduce using rule 24 (Ext)
+
+
+State 36
+
+   27 Iid: EXTENDS . ID
+   28    | EXTENDS . ID "," Aid
+
+    ID  shift, and go to state 46
+
+
+State 37
+
+   22 ClassDecl: CLASS ID Ext Iid . "{" Field "}"
+   23          | CLASS ID Ext Iid . "}" "}"
+
+    "{"  shift, and go to state 47
+    "}"  shift, and go to state 48
+
+
+State 38
+
+   40 Prototype: VOID . ID "(" Formals ")" ";"
+
+    ID  shift, and go to state 49
+
+
+State 39
+
+   36 InterfaceDecl: INTERFACE ID "{" "}" .
+
+    $default  reduce using rule 36 (InterfaceDecl)
+
+
+State 40
+
+   13 Type: Type . "[" "]"
+   39 Prototype: Type . ID "(" Formals ")" ";"
+
+    ID   shift, and go to state 50
+    "["  shift, and go to state 24
+
+
+State 41
+
+   35 InterfaceDecl: INTERFACE ID "{" Prototype . "}"
+   37 Prototype: Prototype . Type ID "(" Formals ")" ";"
+   38          | Prototype . VOID ID "(" Formals ")" ";"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+    VOID     shift, and go to state 51
+    "}"      shift, and go to state 52
+
+    Type  go to state 53
+
+
+State 42
+
+   15 FunctionDecl: Type ID "(" Formals . ")" StmtBlock
+
+    ")"  shift, and go to state 54
+
+
+State 43
+
+    8 Variable: Type ID .
+
+    $default  reduce using rule 8 (Variable)
+
+
+State 44
+
+   16 FunctionDecl: VOID ID "(" Formals ")" . StmtBlock
+
+    "{"  shift, and go to state 55
+
+    StmtBlock  go to state 56
+
+
+State 45
+
+   18 Formals: Formal "," . Variable
+   20 Formal: Formal "," . Variable
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    Variable  go to state 57
+    Type      go to state 32
+
+
+State 46
+
+   27 Iid: EXTENDS ID .
+   28    | EXTENDS ID . "," Aid
+
+    ","  shift, and go to state 58
+
+    $default  reduce using rule 27 (Iid)
+
+
+State 47
+
+   22 ClassDecl: CLASS ID Ext Iid "{" . Field "}"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+    VOID     shift, and go to state 6
+
+    VariableDecl  go to state 59
+    Variable      go to state 12
+    Type          go to state 13
+    FunctionDecl  go to state 60
+    Field         go to state 61
+
+
+State 48
+
+   23 ClassDecl: CLASS ID Ext Iid "}" . "}"
+
+    "}"  shift, and go to state 62
+
+
+State 49
+
+   40 Prototype: VOID ID . "(" Formals ")" ";"
+
+    "("  shift, and go to state 63
+
+
+State 50
+
+   39 Prototype: Type ID . "(" Formals ")" ";"
+
+    "("  shift, and go to state 64
+
+
+State 51
+
+   38 Prototype: Prototype VOID . ID "(" Formals ")" ";"
+
+    ID  shift, and go to state 65
+
+
+State 52
+
+   35 InterfaceDecl: INTERFACE ID "{" Prototype "}" .
+
+    $default  reduce using rule 35 (InterfaceDecl)
+
+
+State 53
+
+   13 Type: Type . "[" "]"
+   37 Prototype: Prototype Type . ID "(" Formals ")" ";"
+
+    ID   shift, and go to state 66
+    "["  shift, and go to state 24
+
+
+State 54
+
+   15 FunctionDecl: Type ID "(" Formals ")" . StmtBlock
+
+    "{"  shift, and go to state 55
+
+    StmtBlock  go to state 67
+
+
+State 55
+
+   41 StmtBlock: "{" . Vd Sd "}"
+   42          | "{" . Sd "}"
+   43          | "{" . Vd "}"
+   44          | "{" . "}"
+
+    ID               shift, and go to state 68
+    INT              shift, and go to state 2
+    DOUBLE           shift, and go to state 3
+    BOOLEAN          shift, and go to state 4
+    STRING           shift, and go to state 5
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "}"              shift, and go to state 83
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    VariableDecl  go to state 86
+    Variable      go to state 12
+    Type          go to state 32
+    StmtBlock     go to state 87
+    Vd            go to state 88
+    Sd            go to state 89
+    Stmt          go to state 90
+    IfStmt        go to state 91
+    WhileStmt     go to state 92
+    ForStmt       go to state 93
+    BreakStmt     go to state 94
+    ReturnStmt    go to state 95
+    PrintStmt     go to state 96
+    Expr          go to state 97
+    Lvalue        go to state 98
+    Call          go to state 99
+    Constant      go to state 100
+
+
+State 56
+
+   16 FunctionDecl: VOID ID "(" Formals ")" StmtBlock .
+
+    $default  reduce using rule 16 (FunctionDecl)
+
+
+State 57
+
+   18 Formals: Formal "," Variable .
+   20 Formal: Formal "," Variable .
+
+    ","       reduce using rule 20 (Formal)
+    $default  reduce using rule 18 (Formals)
+
+
+State 58
+
+   28 Iid: EXTENDS ID "," . Aid
+
+    ID  shift, and go to state 101
+
+    Aid  go to state 102
+
+
+State 59
+
+   33 Field: VariableDecl .
+
+    $default  reduce using rule 33 (Field)
+
+
+State 60
+
+   34 Field: FunctionDecl .
+
+    $default  reduce using rule 34 (Field)
+
+
+State 61
+
+   22 ClassDecl: CLASS ID Ext Iid "{" Field . "}"
+   31 Field: Field . VariableDecl
+   32      | Field . FunctionDecl
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+    VOID     shift, and go to state 6
+    "}"      shift, and go to state 103
+
+    VariableDecl  go to state 104
+    Variable      go to state 12
+    Type          go to state 13
+    FunctionDecl  go to state 105
+
+
+State 62
+
+   23 ClassDecl: CLASS ID Ext Iid "}" "}" .
+
+    $default  reduce using rule 23 (ClassDecl)
+
+
+State 63
+
+   40 Prototype: VOID ID "(" . Formals ")" ";"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 106
+    Formal    go to state 34
+
+
+State 64
+
+   39 Prototype: Type ID "(" . Formals ")" ";"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 107
+    Formal    go to state 34
+
+
+State 65
+
+   38 Prototype: Prototype VOID ID . "(" Formals ")" ";"
+
+    "("  shift, and go to state 108
+
+
+State 66
+
+   37 Prototype: Prototype Type ID . "(" Formals ")" ";"
+
+    "("  shift, and go to state 109
+
+
+State 67
+
+   15 FunctionDecl: Type ID "(" Formals ")" StmtBlock .
+
+    $default  reduce using rule 15 (FunctionDecl)
+
+
+State 68
+
+   14 Type: ID .
+   91 Lvalue: ID .
+   94 Call: ID . "(" Actuals ")"
+   95     | ID . "." ID "(" Actuals ")"
+
+    "."  shift, and go to state 110
+    "("  shift, and go to state 111
+
+    ID        reduce using rule 14 (Type)
+    "["       reduce using rule 14 (Type)
+    "["       [reduce using rule 91 (Lvalue)]
+    "."       [reduce using rule 91 (Lvalue)]
+    $default  reduce using rule 91 (Lvalue)
+
+
+State 69
+
+   58 IfStmt: IF . "(" Expr ")" Stmt
+   59       | IF . "(" Expr ")" Stmt ELSE Stmt
+
+    "("  shift, and go to state 112
+
+
+State 70
+
+   60 WhileStmt: WHILE . "(" Expr ")" Stmt
+
+    "("  shift, and go to state 113
+
+
+State 71
+
+   61 ForStmt: FOR . "(" Expr ";" Expr ";" Expr ")" Stmt
+   62        | FOR . "(" ";" Expr ";" Expr ")" Stmt
+   63        | FOR . "(" ";" Expr ";" ")" Stmt
+   64        | FOR . "(" Expr ";" Expr ";" ")" Stmt
+
+    "("  shift, and go to state 114
+
+
+State 72
+
+   65 BreakStmt: BREAK .
+
+    $default  reduce using rule 65 (BreakStmt)
+
+
+State 73
+
+   66 ReturnStmt: RETURN . ";"
+   67           | RETURN . Expr ";"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 116
+
+    Expr      go to state 117
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 74
+
+   68 PrintStmt: PRINTLN . "(" EX ")" ";"
+
+    "("  shift, and go to state 118
+
+
+State 75
+
+   89 Expr: READLN . "(" ")"
+
+    "("  shift, and go to state 119
+
+
+State 76
+
+   90 Expr: NEWARRAY . "(" INTCONSTANT "," Type ")"
+
+    "("  shift, and go to state 120
+
+
+State 77
+
+  100 Constant: INTCONSTANT .
+
+    $default  reduce using rule 100 (Constant)
+
+
+State 78
+
+  101 Constant: DOUBLECONSTANT .
+
+    $default  reduce using rule 101 (Constant)
+
+
+State 79
+
+  102 Constant: STRINGCONSTANT .
+
+    $default  reduce using rule 102 (Constant)
+
+
+State 80
+
+  103 Constant: BOOLEANCONSTANT .
+
+    $default  reduce using rule 103 (Constant)
+
+
+State 81
+
+   79 Expr: "-" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 121
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 82
+
+   88 Expr: "!" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 122
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 83
+
+   44 StmtBlock: "{" "}" .
+
+    $default  reduce using rule 44 (StmtBlock)
+
+
+State 84
+
+   73 Expr: "(" . Expr ")"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 123
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 85
+
+   50 Stmt: ";" .
+
+    $default  reduce using rule 50 (Stmt)
+
+
+State 86
+
+   46 Vd: VariableDecl .
+
+    $default  reduce using rule 46 (Vd)
+
+
+State 87
+
+   57 Stmt: StmtBlock .
+
+    $default  reduce using rule 57 (Stmt)
+
+
+State 88
+
+   41 StmtBlock: "{" Vd . Sd "}"
+   43          | "{" Vd . "}"
+   45 Vd: Vd . VariableDecl
+
+    ID               shift, and go to state 68
+    INT              shift, and go to state 2
+    DOUBLE           shift, and go to state 3
+    BOOLEAN          shift, and go to state 4
+    STRING           shift, and go to state 5
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "}"              shift, and go to state 124
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    VariableDecl  go to state 125
+    Variable      go to state 12
+    Type          go to state 32
+    StmtBlock     go to state 87
+    Sd            go to state 126
+    Stmt          go to state 90
+    IfStmt        go to state 91
+    WhileStmt     go to state 92
+    ForStmt       go to state 93
+    BreakStmt     go to state 94
+    ReturnStmt    go to state 95
+    PrintStmt     go to state 96
+    Expr          go to state 97
+    Lvalue        go to state 98
+    Call          go to state 99
+    Constant      go to state 100
+
+
+State 89
+
+   42 StmtBlock: "{" Sd . "}"
+   47 Sd: Sd . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "}"              shift, and go to state 127
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 128
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 90
+
+   48 Sd: Stmt .
+
+    $default  reduce using rule 48 (Sd)
+
+
+State 91
+
+   51 Stmt: IfStmt .
+
+    $default  reduce using rule 51 (Stmt)
+
+
+State 92
+
+   52 Stmt: WhileStmt .
+
+    $default  reduce using rule 52 (Stmt)
+
+
+State 93
+
+   53 Stmt: ForStmt .
+
+    $default  reduce using rule 53 (Stmt)
+
+
+State 94
+
+   54 Stmt: BreakStmt .
+
+    $default  reduce using rule 54 (Stmt)
+
+
+State 95
+
+   55 Stmt: ReturnStmt .
+
+    $default  reduce using rule 55 (Stmt)
+
+
+State 96
+
+   56 Stmt: PrintStmt .
+
+    $default  reduce using rule 56 (Stmt)
+
+
+State 97
+
+   49 Stmt: Expr . ";"
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ";"   shift, and go to state 142
+
+
+State 98
+
+   69 Expr: Lvalue . "=" Expr
+   71     | Lvalue .
+   92 Lvalue: Lvalue . "[" Expr "]"
+   93       | Lvalue . "." ID
+
+    "="  shift, and go to state 143
+    "["  shift, and go to state 144
+    "."  shift, and go to state 145
+
+    $default  reduce using rule 71 (Expr)
+
+
+State 99
+
+   72 Expr: Call .
+
+    $default  reduce using rule 72 (Expr)
+
+
+State 100
+
+   70 Expr: Constant .
+
+    $default  reduce using rule 70 (Expr)
+
+
+State 101
+
+   30 Aid: ID .
+
+    $default  reduce using rule 30 (Aid)
+
+
+State 102
+
+   28 Iid: EXTENDS ID "," Aid .
+   29 Aid: Aid . "," ID
+
+    ","  shift, and go to state 146
+
+    $default  reduce using rule 28 (Iid)
+
+
+State 103
+
+   22 ClassDecl: CLASS ID Ext Iid "{" Field "}" .
+
+    $default  reduce using rule 22 (ClassDecl)
+
+
+State 104
+
+   31 Field: Field VariableDecl .
+
+    $default  reduce using rule 31 (Field)
+
+
+State 105
+
+   32 Field: Field FunctionDecl .
+
+    $default  reduce using rule 32 (Field)
+
+
+State 106
+
+   40 Prototype: VOID ID "(" Formals . ")" ";"
+
+    ")"  shift, and go to state 147
+
+
+State 107
+
+   39 Prototype: Type ID "(" Formals . ")" ";"
+
+    ")"  shift, and go to state 148
+
+
+State 108
+
+   38 Prototype: Prototype VOID ID "(" . Formals ")" ";"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 149
+    Formal    go to state 34
+
+
+State 109
+
+   37 Prototype: Prototype Type ID "(" . Formals ")" ";"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    $default  reduce using rule 19 (Formals)
+
+    Variable  go to state 31
+    Type      go to state 32
+    Formals   go to state 150
+    Formal    go to state 34
+
+
+State 110
+
+   95 Call: ID "." . ID "(" Actuals ")"
+
+    ID  shift, and go to state 151
+
+
+State 111
+
+   94 Call: ID "(" . Actuals ")"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    $default  reduce using rule 97 (Actuals)
+
+    Expr      go to state 152
+    Lvalue    go to state 98
+    Call      go to state 99
+    Actuals   go to state 153
+    EX        go to state 154
+    Constant  go to state 100
+
+
+State 112
+
+   58 IfStmt: IF "(" . Expr ")" Stmt
+   59       | IF "(" . Expr ")" Stmt ELSE Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 155
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 113
+
+   60 WhileStmt: WHILE "(" . Expr ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 156
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 114
+
+   61 ForStmt: FOR "(" . Expr ";" Expr ";" Expr ")" Stmt
+   62        | FOR "(" . ";" Expr ";" Expr ")" Stmt
+   63        | FOR "(" . ";" Expr ";" ")" Stmt
+   64        | FOR "(" . Expr ";" Expr ";" ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 157
+
+    Expr      go to state 158
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 115
+
+   91 Lvalue: ID .
+   94 Call: ID . "(" Actuals ")"
+   95     | ID . "." ID "(" Actuals ")"
+
+    "."  shift, and go to state 110
+    "("  shift, and go to state 111
+
+    "."       [reduce using rule 91 (Lvalue)]
+    $default  reduce using rule 91 (Lvalue)
+
+
+State 116
+
+   66 ReturnStmt: RETURN ";" .
+
+    $default  reduce using rule 66 (ReturnStmt)
+
+
+State 117
+
+   67 ReturnStmt: RETURN Expr . ";"
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ";"   shift, and go to state 159
+
+
+State 118
+
+   68 PrintStmt: PRINTLN "(" . EX ")" ";"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 152
+    Lvalue    go to state 98
+    Call      go to state 99
+    EX        go to state 160
+    Constant  go to state 100
+
+
+State 119
+
+   89 Expr: READLN "(" . ")"
+
+    ")"  shift, and go to state 161
+
+
+State 120
+
+   90 Expr: NEWARRAY "(" . INTCONSTANT "," Type ")"
+
+    INTCONSTANT  shift, and go to state 162
+
+
+State 121
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   79     | "-" Expr .
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    $default  reduce using rule 79 (Expr)
+
+
+State 122
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+   88     | "!" Expr .
+
+    $default  reduce using rule 88 (Expr)
+
+
+State 123
+
+   73 Expr: "(" Expr . ")"
+   74     | Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ")"   shift, and go to state 163
+
+
+State 124
+
+   43 StmtBlock: "{" Vd "}" .
+
+    $default  reduce using rule 43 (StmtBlock)
+
+
+State 125
+
+   45 Vd: Vd VariableDecl .
+
+    $default  reduce using rule 45 (Vd)
+
+
+State 126
+
+   41 StmtBlock: "{" Vd Sd . "}"
+   47 Sd: Sd . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "}"              shift, and go to state 164
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 128
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 127
+
+   42 StmtBlock: "{" Sd "}" .
+
+    $default  reduce using rule 42 (StmtBlock)
+
+
+State 128
+
+   47 Sd: Sd Stmt .
+
+    $default  reduce using rule 47 (Sd)
+
+
+State 129
+
+   87 Expr: Expr "||" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 165
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 130
+
+   86 Expr: Expr "&&" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 166
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 131
+
+   84 Expr: Expr "==" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 167
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 132
+
+   85 Expr: Expr "!=" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 168
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 133
+
+   80 Expr: Expr "<" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 169
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 134
+
+   82 Expr: Expr ">" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 170
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 135
+
+   81 Expr: Expr "<=" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 171
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 136
+
+   83 Expr: Expr ">=" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 172
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 137
+
+   74 Expr: Expr "+" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 173
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 138
+
+   75 Expr: Expr "-" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 174
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 139
+
+   76 Expr: Expr "*" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 175
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 140
+
+   77 Expr: Expr "/" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 176
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 141
+
+   78 Expr: Expr "%" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 177
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 142
+
+   49 Stmt: Expr ";" .
+
+    $default  reduce using rule 49 (Stmt)
+
+
+State 143
+
+   69 Expr: Lvalue "=" . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 178
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 144
+
+   92 Lvalue: Lvalue "[" . Expr "]"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 179
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 145
+
+   93 Lvalue: Lvalue "." . ID
+
+    ID  shift, and go to state 180
+
+
+State 146
+
+   29 Aid: Aid "," . ID
+
+    ID  shift, and go to state 181
+
+
+State 147
+
+   40 Prototype: VOID ID "(" Formals ")" . ";"
+
+    ";"  shift, and go to state 182
+
+
+State 148
+
+   39 Prototype: Type ID "(" Formals ")" . ";"
+
+    ";"  shift, and go to state 183
+
+
+State 149
+
+   38 Prototype: Prototype VOID ID "(" Formals . ")" ";"
+
+    ")"  shift, and go to state 184
+
+
+State 150
+
+   37 Prototype: Prototype Type ID "(" Formals . ")" ";"
+
+    ")"  shift, and go to state 185
+
+
+State 151
+
+   95 Call: ID "." ID . "(" Actuals ")"
+
+    "("  shift, and go to state 186
+
+
+State 152
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+   99 EX: Expr .
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    $default  reduce using rule 99 (EX)
+
+
+State 153
+
+   94 Call: ID "(" Actuals . ")"
+
+    ")"  shift, and go to state 187
+
+
+State 154
+
+   96 Actuals: EX .
+   98 EX: EX . "," Expr
+
+    ","  shift, and go to state 188
+
+    $default  reduce using rule 96 (Actuals)
+
+
+State 155
+
+   58 IfStmt: IF "(" Expr . ")" Stmt
+   59       | IF "(" Expr . ")" Stmt ELSE Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ")"   shift, and go to state 189
+
+
+State 156
+
+   60 WhileStmt: WHILE "(" Expr . ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ")"   shift, and go to state 190
+
+
+State 157
+
+   62 ForStmt: FOR "(" ";" . Expr ";" Expr ")" Stmt
+   63        | FOR "(" ";" . Expr ";" ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 191
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 158
+
+   61 ForStmt: FOR "(" Expr . ";" Expr ";" Expr ")" Stmt
+   64        | FOR "(" Expr . ";" Expr ";" ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ";"   shift, and go to state 192
+
+
+State 159
+
+   67 ReturnStmt: RETURN Expr ";" .
+
+    $default  reduce using rule 67 (ReturnStmt)
+
+
+State 160
+
+   68 PrintStmt: PRINTLN "(" EX . ")" ";"
+   98 EX: EX . "," Expr
+
+    ")"  shift, and go to state 193
+    ","  shift, and go to state 188
+
+
+State 161
+
+   89 Expr: READLN "(" ")" .
+
+    $default  reduce using rule 89 (Expr)
+
+
+State 162
+
+   90 Expr: NEWARRAY "(" INTCONSTANT . "," Type ")"
+
+    ","  shift, and go to state 194
+
+
+State 163
+
+   73 Expr: "(" Expr ")" .
+
+    $default  reduce using rule 73 (Expr)
+
+
+State 164
+
+   41 StmtBlock: "{" Vd Sd "}" .
+
+    $default  reduce using rule 41 (StmtBlock)
+
+
+State 165
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+   87     | Expr "||" Expr .
+
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    "||"  error (nonassociative)
+
+    $default  reduce using rule 87 (Expr)
+
+
+State 166
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   86     | Expr "&&" Expr .
+   87     | Expr . "||" Expr
+
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    "&&"  error (nonassociative)
+
+    $default  reduce using rule 86 (Expr)
+
+
+State 167
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   84     | Expr "==" Expr .
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    "=="  error (nonassociative)
+    "!="  error (nonassociative)
+
+    $default  reduce using rule 84 (Expr)
+
+
+State 168
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   85     | Expr "!=" Expr .
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    "=="  error (nonassociative)
+    "!="  error (nonassociative)
+
+    $default  reduce using rule 85 (Expr)
+
+
+State 169
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   80     | Expr "<" Expr .
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    "<"   error (nonassociative)
+    ">"   error (nonassociative)
+    "<="  error (nonassociative)
+    ">="  error (nonassociative)
+
+    $default  reduce using rule 80 (Expr)
+
+
+State 170
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   82     | Expr ">" Expr .
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    "<"   error (nonassociative)
+    ">"   error (nonassociative)
+    "<="  error (nonassociative)
+    ">="  error (nonassociative)
+
+    $default  reduce using rule 82 (Expr)
+
+
+State 171
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   81     | Expr "<=" Expr .
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    "<"   error (nonassociative)
+    ">"   error (nonassociative)
+    "<="  error (nonassociative)
+    ">="  error (nonassociative)
+
+    $default  reduce using rule 81 (Expr)
+
+
+State 172
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   83     | Expr ">=" Expr .
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    "<"   error (nonassociative)
+    ">"   error (nonassociative)
+    "<="  error (nonassociative)
+    ">="  error (nonassociative)
+
+    $default  reduce using rule 83 (Expr)
+
+
+State 173
+
+   74 Expr: Expr . "+" Expr
+   74     | Expr "+" Expr .
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    $default  reduce using rule 74 (Expr)
+
+
+State 174
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   75     | Expr "-" Expr .
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "*"  shift, and go to state 139
+    "/"  shift, and go to state 140
+    "%"  shift, and go to state 141
+
+    $default  reduce using rule 75 (Expr)
+
+
+State 175
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   76     | Expr "*" Expr .
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    $default  reduce using rule 76 (Expr)
+
+
+State 176
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   77     | Expr "/" Expr .
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    $default  reduce using rule 77 (Expr)
+
+
+State 177
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   78     | Expr "%" Expr .
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    $default  reduce using rule 78 (Expr)
+
+
+State 178
+
+   69 Expr: Lvalue "=" Expr .
+   74     | Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    $default  reduce using rule 69 (Expr)
+
+
+State 179
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+   92 Lvalue: Lvalue "[" Expr . "]"
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    "]"   shift, and go to state 195
+
+
+State 180
+
+   93 Lvalue: Lvalue "." ID .
+
+    $default  reduce using rule 93 (Lvalue)
+
+
+State 181
+
+   29 Aid: Aid "," ID .
+
+    $default  reduce using rule 29 (Aid)
+
+
+State 182
+
+   40 Prototype: VOID ID "(" Formals ")" ";" .
+
+    $default  reduce using rule 40 (Prototype)
+
+
+State 183
+
+   39 Prototype: Type ID "(" Formals ")" ";" .
+
+    $default  reduce using rule 39 (Prototype)
+
+
+State 184
+
+   38 Prototype: Prototype VOID ID "(" Formals ")" . ";"
+
+    ";"  shift, and go to state 196
+
+
+State 185
+
+   37 Prototype: Prototype Type ID "(" Formals ")" . ";"
+
+    ";"  shift, and go to state 197
+
+
+State 186
+
+   95 Call: ID "." ID "(" . Actuals ")"
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    $default  reduce using rule 97 (Actuals)
+
+    Expr      go to state 152
+    Lvalue    go to state 98
+    Call      go to state 99
+    Actuals   go to state 198
+    EX        go to state 154
+    Constant  go to state 100
+
+
+State 187
+
+   94 Call: ID "(" Actuals ")" .
+
+    $default  reduce using rule 94 (Call)
+
+
+State 188
+
+   98 EX: EX "," . Expr
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 199
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 189
+
+   58 IfStmt: IF "(" Expr ")" . Stmt
+   59       | IF "(" Expr ")" . Stmt ELSE Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 200
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 190
+
+   60 WhileStmt: WHILE "(" Expr ")" . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 201
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 191
+
+   62 ForStmt: FOR "(" ";" Expr . ";" Expr ")" Stmt
+   63        | FOR "(" ";" Expr . ";" ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ";"   shift, and go to state 202
+
+
+State 192
+
+   61 ForStmt: FOR "(" Expr ";" . Expr ";" Expr ")" Stmt
+   64        | FOR "(" Expr ";" . Expr ";" ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+
+    Expr      go to state 203
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 193
+
+   68 PrintStmt: PRINTLN "(" EX ")" . ";"
+
+    ";"  shift, and go to state 204
+
+
+State 194
+
+   90 Expr: NEWARRAY "(" INTCONSTANT "," . Type ")"
+
+    ID       shift, and go to state 1
+    INT      shift, and go to state 2
+    DOUBLE   shift, and go to state 3
+    BOOLEAN  shift, and go to state 4
+    STRING   shift, and go to state 5
+
+    Type  go to state 205
+
+
+State 195
+
+   92 Lvalue: Lvalue "[" Expr "]" .
+
+    $default  reduce using rule 92 (Lvalue)
+
+
+State 196
+
+   38 Prototype: Prototype VOID ID "(" Formals ")" ";" .
+
+    $default  reduce using rule 38 (Prototype)
+
+
+State 197
+
+   37 Prototype: Prototype Type ID "(" Formals ")" ";" .
+
+    $default  reduce using rule 37 (Prototype)
+
+
+State 198
+
+   95 Call: ID "." ID "(" Actuals . ")"
+
+    ")"  shift, and go to state 206
+
+
+State 199
+
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+   98 EX: EX "," Expr .
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+
+    $default  reduce using rule 98 (EX)
+
+
+State 200
+
+   58 IfStmt: IF "(" Expr ")" Stmt .
+   59       | IF "(" Expr ")" Stmt . ELSE Stmt
+
+    ELSE  shift, and go to state 207
+
+    $default  reduce using rule 58 (IfStmt)
+
+
+State 201
+
+   60 WhileStmt: WHILE "(" Expr ")" Stmt .
+
+    $default  reduce using rule 60 (WhileStmt)
+
+
+State 202
+
+   62 ForStmt: FOR "(" ";" Expr ";" . Expr ")" Stmt
+   63        | FOR "(" ";" Expr ";" . ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+    ")"              shift, and go to state 208
+
+    Expr      go to state 209
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 203
+
+   61 ForStmt: FOR "(" Expr ";" Expr . ";" Expr ")" Stmt
+   64        | FOR "(" Expr ";" Expr . ";" ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ";"   shift, and go to state 210
+
+
+State 204
+
+   68 PrintStmt: PRINTLN "(" EX ")" ";" .
+
+    $default  reduce using rule 68 (PrintStmt)
+
+
+State 205
+
+   13 Type: Type . "[" "]"
+   90 Expr: NEWARRAY "(" INTCONSTANT "," Type . ")"
+
+    "["  shift, and go to state 24
+    ")"  shift, and go to state 211
+
+
+State 206
+
+   95 Call: ID "." ID "(" Actuals ")" .
+
+    $default  reduce using rule 95 (Call)
+
+
+State 207
+
+   59 IfStmt: IF "(" Expr ")" Stmt ELSE . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 212
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 208
+
+   63 ForStmt: FOR "(" ";" Expr ";" ")" . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 213
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 209
+
+   62 ForStmt: FOR "(" ";" Expr ";" Expr . ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ")"   shift, and go to state 214
+
+
+State 210
+
+   61 ForStmt: FOR "(" Expr ";" Expr ";" . Expr ")" Stmt
+   64        | FOR "(" Expr ";" Expr ";" . ")" Stmt
+
+    ID               shift, and go to state 115
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "("              shift, and go to state 84
+    ")"              shift, and go to state 215
+
+    Expr      go to state 216
+    Lvalue    go to state 98
+    Call      go to state 99
+    Constant  go to state 100
+
+
+State 211
+
+   90 Expr: NEWARRAY "(" INTCONSTANT "," Type ")" .
+
+    $default  reduce using rule 90 (Expr)
+
+
+State 212
+
+   59 IfStmt: IF "(" Expr ")" Stmt ELSE Stmt .
+
+    $default  reduce using rule 59 (IfStmt)
+
+
+State 213
+
+   63 ForStmt: FOR "(" ";" Expr ";" ")" Stmt .
+
+    $default  reduce using rule 63 (ForStmt)
+
+
+State 214
+
+   62 ForStmt: FOR "(" ";" Expr ";" Expr ")" . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 217
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 215
+
+   64 ForStmt: FOR "(" Expr ";" Expr ";" ")" . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 218
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 216
+
+   61 ForStmt: FOR "(" Expr ";" Expr ";" Expr . ")" Stmt
+   74 Expr: Expr . "+" Expr
+   75     | Expr . "-" Expr
+   76     | Expr . "*" Expr
+   77     | Expr . "/" Expr
+   78     | Expr . "%" Expr
+   80     | Expr . "<" Expr
+   81     | Expr . "<=" Expr
+   82     | Expr . ">" Expr
+   83     | Expr . ">=" Expr
+   84     | Expr . "==" Expr
+   85     | Expr . "!=" Expr
+   86     | Expr . "&&" Expr
+   87     | Expr . "||" Expr
+
+    "||"  shift, and go to state 129
+    "&&"  shift, and go to state 130
+    "=="  shift, and go to state 131
+    "!="  shift, and go to state 132
+    "<"   shift, and go to state 133
+    ">"   shift, and go to state 134
+    "<="  shift, and go to state 135
+    ">="  shift, and go to state 136
+    "+"   shift, and go to state 137
+    "-"   shift, and go to state 138
+    "*"   shift, and go to state 139
+    "/"   shift, and go to state 140
+    "%"   shift, and go to state 141
+    ")"   shift, and go to state 219
+
+
+State 217
+
+   62 ForStmt: FOR "(" ";" Expr ";" Expr ")" Stmt .
+
+    $default  reduce using rule 62 (ForStmt)
+
+
+State 218
+
+   64 ForStmt: FOR "(" Expr ";" Expr ";" ")" Stmt .
+
+    $default  reduce using rule 64 (ForStmt)
+
+
+State 219
+
+   61 ForStmt: FOR "(" Expr ";" Expr ";" Expr ")" . Stmt
+
+    ID               shift, and go to state 115
+    IF               shift, and go to state 69
+    WHILE            shift, and go to state 70
+    FOR              shift, and go to state 71
+    BREAK            shift, and go to state 72
+    RETURN           shift, and go to state 73
+    PRINTLN          shift, and go to state 74
+    READLN           shift, and go to state 75
+    NEWARRAY         shift, and go to state 76
+    INTCONSTANT      shift, and go to state 77
+    DOUBLECONSTANT   shift, and go to state 78
+    STRINGCONSTANT   shift, and go to state 79
+    BOOLEANCONSTANT  shift, and go to state 80
+    "-"              shift, and go to state 81
+    "!"              shift, and go to state 82
+    "{"              shift, and go to state 55
+    "("              shift, and go to state 84
+    ";"              shift, and go to state 85
+
+    StmtBlock   go to state 87
+    Stmt        go to state 220
+    IfStmt      go to state 91
+    WhileStmt   go to state 92
+    ForStmt     go to state 93
+    BreakStmt   go to state 94
+    ReturnStmt  go to state 95
+    PrintStmt   go to state 96
+    Expr        go to state 97
+    Lvalue      go to state 98
+    Call        go to state 99
+    Constant    go to state 100
+
+
+State 220
+
+   61 ForStmt: FOR "(" Expr ";" Expr ";" Expr ")" Stmt .
+
+    $default  reduce using rule 61 (ForStmt)

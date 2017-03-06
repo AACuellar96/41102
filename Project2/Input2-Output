@@ -1,0 +1,108 @@
+interface id leftbrace 
+int id leftparen rightparen semicolon 
+int id leftparen rightparen semicolon 
+rightbrace 
+ int id leftparen int id comma int id comma int id rightparen leftbrace 
+if leftparen id equal intconstant rightparen return id semicolon 
+else return id leftparen id minus intconstant comma id multiplication id comma id rightparen semicolon 
+rightbrace 
+void id leftparen rightparen leftbrace 
+int id assignop intconstant semicolon 
+double id assignop semicolon 
+int id semicolon 
+println leftparen stringconstant comma id leftparen intconstant comma intconstant comma intconstant rightparen comma stringconstant rightparen semicolon 
+id assignop intconstant mod intconstant semicolon 
+id assignop doubleconstant semicolon 
+id assignop intconstant semicolon 
+for leftparen semicolon 
+id greater intconstant semicolon 
+rightparen leftbrace 
+id assignop id multiplication id semicolon 
+id assignop id minus intconstant semicolon 
+rightbrace 
+println leftparen stringconstant comma id rightparen semicolon 
+println leftparen stringconstant rightparen semicolon 
+rightbrace 
+multiplication division period class id implements id leftbrace 
+int id leftparen rightparen leftbrace 
+return intconstant semicolon 
+rightbrace 
+int id leftparen rightparen leftbrace 
+return minus intconstant semicolon 
+rightbrace 
+rightbrace 
+class id extends id leftbrace 
+int id leftparen rightparen leftbrace 
+string id assignop stringconstant semicolon 
+id assignop InvalidInput id semicolon 
+id assignop stringconstant semicolon 
+int id assignop intconstant semicolon 
+id assignop intconstant semicolon 
+double id assignop doubleconstant semicolon 
+id assignop period intconstant id plus intconstant semicolon 
+id assignop doubleconstant id semicolon 
+id assignop period intconstant id assignop doubleconstant semicolon 
+id assignop doubleconstant plus intconstant boolean id assignop not booleanconstant semicolon 
+id assignop not booleanconstant semicolon 
+double leftbrack rightbrack id semicolon 
+while leftparen id assignop leftparen id division intconstant rightparen greaterequal intconstant rightparen leftbrace 
+println leftparen id comma stringconstant rightparen readln semicolon 
+break semicolon 
+rightbrace 
+semicolon 
+id assignop newarray leftparen intconstant comma double rightparen semicolon 
+return intconstant semicolon 
+rightbrace 
+int id leftparen rightparen leftbrace 
+int id assignop intconstant semicolon 
+int id assignop intconstant semicolon 
+if leftparen id less intconstant and id lessequal intconstant rightparen return intconstant semicolon 
+else if leftparen id greater intconstant or id greaterequal intconstant rightparen return minus intconstant semicolon 
+else return intconstant semicolon 
+rightbrace 
+rightbrace 
+          A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T 
+switch:  -1  -1  -1   0   8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1   9 
+
+          U   V   W   X   Y   Z   a   b   c   d   e   f   g   h   i   j   k   l   m   n 
+switch:  -1  13  -1  -1  -1  -1  16  26  38  43  54  67  -1  -1  84  -1  -1  -1  99 103 
+
+          o   p   q   r   s   t   u   v   w   x   y   z 
+switch: 117 121  -1 128 139 145  -1 160 167 172 173  -1 
+
+
+           0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19 
+symbol:    E    M    O    *    e    m    o    *    *    e    s    t    *    a    l    *    n    o    t    h 
+  next:    4                                                                                                
+
+          20   21   22   23   24   25   26   27   28   29   30   31   32   33   34   35   36   37   38   39 
+symbol:    e    r    R    u    n    *    o    o    l    e    a    n    *    r    e    a    k    *    l    a 
+  next:                                 33                                                                  
+
+          40   41   42   43   44   45   46   47   48   49   50   51   52   53   54   55   56   57   58   59 
+symbol:    s    s    *    *    e    m    o    *    o    u    b    l    e    *    l    s    e    *    x    p 
+  next:                  44   48                                                58                       61 
+
+          60   61   62   63   64   65   66   67   68   69   70   71   72   73   74   75   76   77   78   79 
+symbol:    *    t    e    n    d    s    *    a    l    s    e    *    i    n    a    l    D    e    m    o 
+  next:                                      72                       81                                    
+
+          80   81   82   83   84   85   86   87   88   89   90   91   92   93   94   95   96   97   98   99 
+symbol:    *    o    r    *    f    *    m    p    l    e    m    e    n    t    s    *    n    t    *    a 
+  next:                       86        96                                                                  
+
+         100  101  102  103  104  105  106  107  108  109  110  111  112  113  114  115  116  117  118  119 
+symbol:    i    n    *    a    m    e    5    _    *    e    w    a    r    r    a    y    *    r    i    g 
+  next:                 109                                                                                 
+
+         120  121  122  123  124  125  126  127  128  129  130  131  132  133  134  135  136  137  138  139 
+symbol:    *    r    i    n    t    l    n    *    e    a    d    l    n    *    t    u    r    n    *    t 
+  next:                                               134                                                   
+
+         140  141  142  143  144  145  146  147  148  149  150  151  152  153  154  155  156  157  158  159 
+symbol:    r    i    n    g    *    e    s    t    *    R    u    n    *    r    u    e    *    t    h    * 
+  next:                           153            149                                157                     
+
+         160  161  162  163  164  165  166  167  168  169  170  171  172  173 
+symbol:    a    l    *    o    i    d    *    h    i    l    e    *    *    * 
+  next:  163             

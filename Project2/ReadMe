@@ -1,0 +1,29 @@
+Instructions on how to run the program on Linux:
+
+Open the Terminal and Do the Following commands:
+
+cd to my Project2 file's location, e.g if it was in desktop it would be 
+cd Desktop/Project2
+
+bison -d --verbose scanner.y
+flex scanner.l
+
+
+gcc lex.yy.c scanner.tab.c -o scan
+g++ -std=c++11 scanner.cpp lex.yy.c -o scanner
+g++ -std=c++11 scanner.cpp lex.yy.c scanner.tab.c -o scan?
+
+Ignore the warning about -Wformat-zero-length in yylex() 
+
+and then
+./scanner <Input1 
+or
+./scanner <Input2 
+or
+./scanner <Input3
+or
+./scanner <Input4 
+depending on which file is being run.
+
+./scan <InputFile
+
